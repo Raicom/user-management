@@ -1,17 +1,11 @@
 {
-	"name": "raicom/module-user-management",
+	"name": "webvimark/module-user-management",
 	"description": "User with improved RBAC",
 	"autoload": {
 		"psr-4": {
-			"raicom\\modules\\UserManagement\\": ""
+			"webvimark\\modules\\UserManagement\\": ""
 		}
 	},
-	"repositories": [  
-        	{  
-            		"type": "vcs",  
-            		"url": "https://github.com/Raicom/user-management.git"  
-        	}  
-    	],
 	"require": {
 		"webvimark/components": "^1.0.0",
 		"webvimark/bootstrap-switch": "^1.0.0",
