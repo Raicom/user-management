@@ -6,6 +6,12 @@
 			"raicom\\modules\\UserManagement\\": ""
 		}
 	},
+	"repositories": [  
+        	{  
+            		"type": "vcs",  
+            		"url": "https://github.com/Raicom/user-management.git"  
+        	}  
+    	],
 	"require": {
 		"webvimark/components": "^1.0.0",
 		"webvimark/bootstrap-switch": "^1.0.0",
