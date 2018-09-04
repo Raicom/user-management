@@ -17,6 +17,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property integer $id
  * @property string $username
+ * @property string $name
  * @property string $email
  * @property integer $email_confirmed
  * @property string $auth_key
@@ -252,7 +253,10 @@ class User extends UserIdentity
 			['username', 'unique'],
 			['username', 'trim'],
 
-			[['status', 'email_confirmed'], 'integer'],
+            ['name', 'string', 'max' => 255],
+            ['name', 'required'],
+
+            [['status', 'email_confirmed'], 'integer'],
 
 			['email', 'email'],
 			['email', 'validateEmailConfirmedUnique'],
@@ -317,7 +321,8 @@ class User extends UserIdentity
 		return [
 			'id'                 => 'ID',
 			'username'           => UserManagementModule::t('back', 'Login'),
-			'superadmin'         => UserManagementModule::t('back', 'Superadmin'),
+            'name'               => 'Name',
+            'superadmin'         => UserManagementModule::t('back', 'Superadmin'),
 			'confirmation_token' => UserManagementModule::t('back', 'Confirmation Token'),
 			'registration_ip'    => UserManagementModule::t('back', 'Registration IP'),
 			'bind_to_ip'         => UserManagementModule::t('back', 'Bind to IP'),

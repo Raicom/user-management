@@ -85,7 +85,11 @@ $this->params['breadcrumbs'][] = $this->title;
 							},
 						'format'=>'raw',
 					],
-					[
+                    [
+                        'attribute'=>'name',
+                        'format'=>'raw',
+                    ],
+                    [
 						'attribute'=>'email',
 						'format'=>'raw',
 						'visible'=>User::hasPermission('viewUserEmail'),

@@ -25,6 +25,7 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 		->dropDownList(User::getStatusList()) ?>
 
 	<?= $form->field($model, 'username')->textInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
 
 	<?php if ( $model->isNewRecord ): ?>
 
