@@ -16,26 +16,28 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-visit-log-view">
 
 
-	<div class="panel panel-default">
-		<div class="panel-body">
+    <div class="panel panel-default">
+        <div class="panel-body">
 
-			<?= DetailView::widget([
-				'model' => $model,
-				'attributes' => [
-					[
-						'attribute'=>'user_id',
-						'value'=>@$model->user->username,
-					],
-					'ip',
-					'language',
-					'os',
-					'browser',
-					'user_agent',
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    [
+                        'attribute'=>'user_id',
+                        'value'=>@$model->user->username,
+                    ],
+                    'ip',
+                    'language',
+                    'os',
+                    'browser',
+                    'user_agent',
 
-					'visit_time:datetime',
-				],
-			]) ?>
+                    'visit_time:datetime',
+                    'exit_time:datetime',
+                    'duration'
+                ],
+            ]) ?>
 
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
