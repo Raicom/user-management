@@ -49,6 +49,14 @@ class UserConfig extends User
 		return @Yii::$app->user->identity->username;
 	}
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return @Yii::$app->user->identity->name;
+    }
+
 	/**
 	 * @inheritdoc
 	 */
