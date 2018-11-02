@@ -6,7 +6,14 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use webvimark\extensions\GridPageSize\GridPageSize;
 use yii\grid\GridView;
-
+use webvimark\modules\UserManagement\models\UserVisitLog;
+$token = Yii::$app->session->get('__visitorToken');
+if ($token) {
+    $log_model = UserVisitLog::find()->where(['token' => $token])->one();
+    $log_model->exit_time = time();
+    $log_model->duration = gmdate("H:i:s",$log_model->exit_time - $log_model->visit_time);
+    $log_model->save(false);
+}
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
@@ -16,70 +23,79 @@ use yii\grid\GridView;
 $this->title = UserManagementModule::t('back', 'Visit log');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-visit-log-index">
+    <div class="user-visit-log-index">
 
-	<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+        <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-	<div class="panel panel-default">
+        <div class="panel panel-default">
 
-		<div class="panel-body">
+            <div class="panel-body">
 
-			<div class="row">
-				<div class="col-sm-12 text-right">
-					<?= GridPageSize::widget(['pjaxId'=>'user-visit-log-grid-pjax']) ?>
-				</div>
-			</div>
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+                        <?= GridPageSize::widget(['pjaxId' => 'user-visit-log-grid-pjax']) ?>
+                    </div>
+                </div>
 
-			<?php Pjax::begin([
-				'id'=>'user-visit-log-grid-pjax',
-			]) ?>
+                <?php Pjax::begin([
+                    'id' => 'user-visit-log-grid-pjax',
+                ]) ?>
 
-			<?= GridView::widget([
-				'id'=>'user-visit-log-grid',
-				'dataProvider' => $dataProvider,
-				'pager'=>[
-					'options'=>['class'=>'pagination pagination-sm'],
-					'hideOnSinglePage'=>true,
-					'lastPageLabel'=>'>>',
-					'firstPageLabel'=>'<<',
-				],
-				'layout'=>'{items}<div class="row"><div class="col-sm-8">{pager}</div><div class="col-sm-4 text-right">{summary}</div></div>',
-				'filterModel' => $searchModel,
-				'columns' => [
-					['class' => 'yii\grid\SerialColumn', 'options'=>['style'=>'width:10px'] ],
+                <?= GridView::widget([
+                    'id' => 'user-visit-log-grid',
+                    'dataProvider' => $dataProvider,
+                    'pager' => [
+                        'options' => ['class' => 'pagination pagination-sm'],
+                        'hideOnSinglePage' => true,
+                        'lastPageLabel' => '>>',
+                        'firstPageLabel' => '<<',
+                    ],
+                    'layout' => '{items}<div class="row"><div class="col-sm-8">{pager}</div><div class="col-sm-4 text-right">{summary}</div></div>',
+                    'filterModel' => $searchModel,
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn', 'options' => ['style' => 'width:10px']],
 
-					[
-						'attribute'=>'user_id',
-						'value'=>function($model){
-								return Html::a(@$model->user->username, ['view', 'id'=>$model->id], ['data-pjax'=>0]);
-							},
-						'format'=>'raw',
-					],
-					'language',
-					'os',
-					'browser',
-					array(
-						'attribute'=>'ip',
-						'value'=>function($model){
-								return Html::a($model->ip, "http://ipinfo.io/" . $model->ip, ["target"=>"_blank"]);
-							},
-						'format'=>'raw',
-					),
-					'visit_time:datetime',
-					[
-						'class' => 'yii\grid\ActionColumn',
-						'template'=>'{view}',
-						'contentOptions'=>['style'=>'width:70px; text-align:center;'],
-					],
-				],
-			]); ?>
-		
-			<?php Pjax::end() ?>
-		</div>
-	</div>
-</div>
+                        [
+                            'attribute' => 'user_id',
+                            'value' => function ($model) {
+                                return Html::a(@$model->user->username, ['view', 'id' => $model->id], ['data-pjax' => 0]);
+                            },
+                            'format' => 'raw',
+                        ],
+                        'language',
+                        'os',
+                        'browser',
+                        array(
+                            'attribute' => 'ip',
+                            'value' => function ($model) {
+                                return Html::a($model->ip, "http://ipinfo.io/" . $model->ip, ["target" => "_blank"]);
+                            },
+                            'format' => 'raw',
+                        ),
+                        'visit_time:datetime',
+                        'exit_time:datetime',
+                        [
+                            'attribute' => 'duration',
+                        ],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{view}',
+                            'contentOptions' => ['style' => 'width:70px; text-align:center;'],
+                        ],
+                    ],
+                ]); ?>
+
+                <?php Pjax::end() ?>
+            </div>
+        </div>
+    </div>
 
 <?php DateRangePicker::widget([
-	'model'     => $searchModel,
-	'attribute' => 'visit_time',
+    'model' => $searchModel,
+    'attribute' => 'visit_time',
+]) ?>
+
+<?php DateRangePicker::widget([
+    'model' => $searchModel,
+    'attribute' => 'exit_time',
 ]) ?>
