@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->locationName;
                         },
                         'filterType'=>GridView::FILTER_SELECT2,
-                        'filter'=>ArrayHelper::map(LutLocations::find()->orderBy('name')->asArray()->all(), 'id', 'name'),
+                        'filter'=>ArrayHelper::map(LutLocations::find()->orderBy('name')->asArray()->all(), 'name', 'name'),
                         'filterWidgetOptions'=>[
                             'pluginOptions'=>['allowClear'=>true],
                         ],
@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->departmentName;
                         },
                         'filterType'=>GridView::FILTER_SELECT2,
-                        'filter'=>ArrayHelper::map(LutDepartments::find()->orderBy('name')->asArray()->all(), 'id', 'name'),
+                        'filter'=>ArrayHelper::map(LutDepartments::find()->orderBy('name')->asArray()->all(), 'name', 'name'),
                         'filterWidgetOptions'=>[
                             'pluginOptions'=>['allowClear'=>true],
                         ],
@@ -125,7 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->configName;
                         },
                         'filterType'=>GridView::FILTER_SELECT2,
-                        'filter'=>ArrayHelper::map(DaConfigs::find()->where(['status' => 1])->orderBy('name')->asArray()->all(), 'id', 'name'),
+                        'filter'=>ArrayHelper::map(DaConfigs::find()->where(['status' => 1])->orderBy('name')->asArray()->all(), 'name', 'name'),
                         'filterWidgetOptions'=>[
                             'pluginOptions'=>['allowClear'=>true],
                         ],
