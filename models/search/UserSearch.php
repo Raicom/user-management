@@ -12,66 +12,89 @@ use webvimark\modules\UserManagement\models\User;
  */
 class UserSearch extends User
 {
-	public function rules()
-	{
-		return [
-			[['id', 'superadmin', 'status', 'created_at', 'updated_at', 'email_confirmed'], 'integer'],
-			[['username', 'gridRoleSearch', 'registration_ip', 'email'], 'string'],
-		];
-	}
+    public $locationName;
+    public $departmentName;
+    public $configName;
 
-	public function scenarios()
-	{
-		// bypass scenarios() implementation in the parent class
-		return Model::scenarios();
-	}
+    public function rules()
+    {
+        return [
+            [['id', 'superadmin', 'status', 'created_at', 'updated_at', 'email_confirmed'], 'integer'],
+            [['username', 'name', 'gridRoleSearch', 'registration_ip', 'email'], 'string'],
+            [['locationName', 'departmentName', 'configName'], 'safe'],
 
-	public function search($params)
-	{
-		$query = User::find();
+        ];
+    }
 
-		$query->with(['roles']);
+    public function scenarios()
+    {
+        // bypass scenarios() implementation in the parent class
+        return Model::scenarios();
+    }
 
-		if ( !Yii::$app->user->isSuperadmin )
-		{
-			$query->where(['superadmin'=>0]);
-		}
+    public function search($params)
+    {
+        $query = User::find();
+        $query->joinWith(['location', 'department', 'config']);
+        $query->with(['roles']);
 
-		$dataProvider = new ActiveDataProvider([
-			'query' => $query,
-			'pagination' => [
-				'pageSize' => Yii::$app->request->cookies->getValue('_grid_page_size', 20),
-			],
-			'sort'=>[
-				'defaultOrder'=>[
-					'id'=>SORT_DESC,
-				],
-			],
-		]);
+        if (!Yii::$app->user->isSuperadmin) {
+            $query->where(['superadmin' => 0]);
+        }
 
-		if (!($this->load($params) && $this->validate())) {
-			return $dataProvider;
-		}
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => Yii::$app->request->cookies->getValue('_grid_page_size', 20),
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'status'=>SORT_DESC, 'name'=>SORT_ASC,
+                ],
+            ],
+        ]);
 
-		if ( $this->gridRoleSearch )
-		{
-			$query->joinWith(['roles']);
-		}
+        $dataProvider->sort->attributes['locationName'] = [
+            // Это те таблицы, с которыми у нас установлена связь
+            'asc' => ['lut_locations.name' => SORT_ASC],
+            'desc' => ['lut_locations.name' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['departmentName'] = [
+            // Это те таблицы, с которыми у нас установлена связь
+            'asc' => ['lut_departments.name' => SORT_ASC],
+            'desc' => ['lut_departments.name' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['configName'] = [
+            // Это те таблицы, с которыми у нас установлена связь
+            'asc' => ['da_configs.name' => SORT_ASC],
+            'desc' => ['da_configs.name' => SORT_DESC],
+        ];
+        if (!($this->load($params) && $this->validate())) {
+            return $dataProvider;
+        }
 
-		$query->andFilterWhere([
-			'id' => $this->id,
-			'superadmin' => $this->superadmin,
-			'status' => $this->status,
-			Yii::$app->getModule('user-management')->auth_item_table . '.name' => $this->gridRoleSearch,
-			'registration_ip' => $this->registration_ip,
-			'created_at' => $this->created_at,
-			'updated_at' => $this->updated_at,
-			'email_confirmed' => $this->email_confirmed,
-		]);
+        if ($this->gridRoleSearch) {
+            $query->joinWith(['roles']);
+        }
 
-        	$query->andFilterWhere(['like', 'username', $this->username])
-			->andFilterWhere(['like', 'email', $this->email]);
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'superadmin' => $this->superadmin,
+            'status' => $this->status,
+            Yii::$app->getModule('user-management')->auth_item_table . '.name' => $this->gridRoleSearch,
+            'registration_ip' => $this->registration_ip,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'email_confirmed' => $this->email_confirmed,
+        ]);
 
-		return $dataProvider;
-	}
+        $query->andFilterWhere(['like', 'username', $this->username])
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'lut_locations.name', $this->locationName])
+            ->andFilterWhere(['like', 'lut_departments.name', $this->departmentName])
+            ->andFilterWhere(['like', 'da_configs.name', $this->configName]);
+
+        return $dataProvider;
+    }
 }
