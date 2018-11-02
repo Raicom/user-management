@@ -8,7 +8,7 @@ use yii\helpers\Html;
  * @var webvimark\modules\UserManagement\models\User $model
  */
 
-$this->title = UserManagementModule::t('back', 'User creation Daily activity');
+$this->title = UserManagementModule::t('back', 'User creation');
 $this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
