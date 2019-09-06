@@ -21,8 +21,6 @@ $this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Ro
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<h2 class="lte-hide-title"><?= $this->title ?></h2>
-
 <?php if ( Yii::$app->session->hasFlash('success') ): ?>
 	<div class="alert alert-success text-center">
 		<?= Yii::$app->session->getFlash('success') ?>

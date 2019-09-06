@@ -19,13 +19,13 @@ $this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Us
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<h2 class="lte-hide-title"><?= $this->title ?></h2>
-
-<?php if ( Yii::$app->session->hasFlash('success') ): ?>
-	<div class="alert alert-success text-center">
-		<?= Yii::$app->session->getFlash('success') ?>
-	</div>
-<?php endif; ?>
+<!--<h2 class="lte-hide-title">--><?//= $this->title ?><!--</h2>-->
+<!---->
+<?php //if ( Yii::$app->session->hasFlash('success') ): ?>
+<!--	<div class="alert alert-success text-center">-->
+<!--		--><?//= Yii::$app->session->getFlash('success') ?>
+<!--	</div>-->
+<?php //endif; ?>
 
 <div class="row">
 	<div class="col-sm-4">

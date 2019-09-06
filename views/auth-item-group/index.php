@@ -21,8 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="auth-item-group-index">
 
-	<h2 class="lte-hide-title"><?= $this->title ?></h2>
-
 	<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
 	<div class="panel panel-default">
