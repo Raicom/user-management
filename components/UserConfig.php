@@ -49,6 +49,14 @@ class UserConfig extends User
 		return @Yii::$app->user->identity->username;
 	}
 
+    /**
+     * @return integer
+     */
+    public function getSalesId()
+    {
+        return @Yii::$app->user->identity->sales_id;
+    }
+
 	/**
 	 * @inheritdoc
 	 */
