@@ -33,6 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
 					'user_agent',
 
 					'visit_time:datetime',
+					'exit_time:datetime',
+					'duration',
 				],
 			]) ?>
 

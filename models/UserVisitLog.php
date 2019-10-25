@@ -19,6 +19,8 @@ use Yii;
  * @property string $user_agent
  * @property integer $user_id
  * @property integer $visit_time
+ * @property integer $exit_time
+ * @property integer $duration
  *
  * @property User $user
  */
@@ -44,6 +46,8 @@ class UserVisitLog extends \webvimark\components\BaseActiveRecord
 		$model->os         = $browser->getPlatform();
 		$model->user_agent = $browser->getUserAgent();
 		$model->visit_time = time();
+		$model->exit_time = time();
+		$model->duration = '00:00:00';
 		$model->save(false);
 
 		Yii::$app->session->set(self::SESSION_TOKEN, $model->token);
@@ -87,12 +91,12 @@ class UserVisitLog extends \webvimark\components\BaseActiveRecord
 	public function rules()
 	{
 		return [
-			[['token', 'ip', 'language', 'visit_time'], 'required'],
-			[['user_id', 'visit_time'], 'integer'],
+			[['token', 'ip', 'language', 'visit_time', 'exit_time'], 'required'],
+			[['user_id', 'visit_time', 'exit_time'], 'integer'],
 			[['token', 'user_agent'], 'string', 'max' => 255],
 			[['ip'], 'string', 'max' => 15],
 			[['os'], 'string', 'max' => 20],
-			[['browser'], 'string', 'max' => 30],
+			[['duration','browser'], 'string', 'max' => 30],
 			[['language'], 'string', 'max' => 2]
 		];
 	}
@@ -112,6 +116,8 @@ class UserVisitLog extends \webvimark\components\BaseActiveRecord
 			'user_agent' => UserManagementModule::t('back', 'User agent'),
 			'user_id'    => UserManagementModule::t('back', 'User'),
 			'visit_time' => UserManagementModule::t('back', 'Visit Time'),
+			'exit_time' => UserManagementModule::t('back', 'Exit Time'),
+			'duration' => UserManagementModule::t('back', 'Duration'),
 		];
 	}
 

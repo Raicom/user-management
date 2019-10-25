@@ -17,7 +17,7 @@ class UserVisitLogSearch extends UserVisitLog
 	{
 		return [
 			[['id'], 'integer'],
-			[['token', 'ip', 'language', 'user_id', 'os', 'browser', 'visit_time'], 'safe'],
+			[['token', 'ip', 'language', 'user_id', 'os', 'browser', 'visit_time', 'exit_time', 'duration'], 'safe'],
 		];
 	}
 
@@ -59,6 +59,14 @@ class UserVisitLogSearch extends UserVisitLog
 			if ( isset($tmp[0], $tmp[1]) )
 			{
 				$query->andFilterWhere(['between', static::tableName() . '.visit_time', strtotime($tmp[0]), strtotime($tmp[1])]);
+			}
+		}
+		if ( $this->exit_time )
+		{
+			$tmp = explode(' - ', $this->exit_time);
+			if ( isset($tmp[0], $tmp[1]) )
+			{
+				$query->andFilterWhere(['between', static::tableName() . '.exit_time', strtotime($tmp[0]), strtotime($tmp[1])]);
 			}
 		}
 

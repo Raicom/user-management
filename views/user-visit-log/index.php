@@ -66,6 +66,8 @@ $this->params['breadcrumbs'][] = $this->title;
 						'format'=>'raw',
 					),
 					'visit_time:datetime',
+					'exit_time:datetime',
+					'duration',
 					[
 						'class' => 'yii\grid\ActionColumn',
 						'template'=>'{view}',
