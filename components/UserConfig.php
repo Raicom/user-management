@@ -57,6 +57,14 @@ class UserConfig extends User
         return @Yii::$app->user->identity->sales_id;
     }
 
+    /**
+     * @return string
+     */
+    public function getemail()
+    {
+        return @Yii::$app->user->identity->email;
+    }
+
 	/**
 	 * @inheritdoc
 	 */
