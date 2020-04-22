@@ -69,13 +69,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]).'</div></div>',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn', 'options'=>['style'=>'width:10px'] ],
-
+                    [
+                        'attribute'=>'id',
+                        'format'=>'raw',
+                    ],
                     [
                         'class'=>'webvimark\components\StatusColumn',
                         'attribute'=>'superadmin',
                         'visible'=>Yii::$app->user->isSuperadmin,
                     ],
-
                     [
                         'attribute'=>'sales_id',
                         'format'=>'raw',
