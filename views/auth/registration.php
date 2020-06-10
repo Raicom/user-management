@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><?= UserManagementModule::t('front', 'Registration of new client (CABO)') ?></h3>
+                    <h3 class="panel-title"><?= UserManagementModule::t('front', 'New Account Setup') ?></h3>
                 </div>
                 <div class="panel-body">
 
@@ -33,45 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             'template' => "{input}\n{error}",
                         ],
                     ]) ?>
-                    <?= $form->field($model, 'name')
-                        ->textInput(['maxlength' => 50, 'placeholder' => $model->getAttributeLabel('name'), /*'autocomplete' => 'off'*/]) ?>
-
-                    <?php
-                    $business_types = ArrayHelper::map(common\models\LutBusinessType::find()->orderBy('name')->asArray()->all(), 'id', 'name');
-                    echo $form->field($model, 'lut_business_type_id')->dropDownList($business_types, ['prompt' => 'Type of Business...']);
-                    ?>
-
-                    <?= $form->field($model, 'years_in_business')
-                        ->textInput(['maxlength' => 50, 'placeholder' => $model->getAttributeLabel('years_in_business'),]) ?>
-
-                    <?= $form->field($model, 'contact')
-                        ->textInput(['maxlength' => 50, 'placeholder' => $model->getAttributeLabel('contact'),]) ?>
-
-                    <?= $form->field($model, 'address_1')
-                        ->textInput(['maxlength' => 50, 'placeholder' => $model->getAttributeLabel('address_1'),]) ?>
-
-                    <?= $form->field($model, 'address_2')
-                        ->textInput(['maxlength' => 50, 'placeholder' => $model->getAttributeLabel('address_2'),]) ?>
-
-                    <?= $form->field($model, 'city')
-                        ->textInput(['maxlength' => 50, 'placeholder' => $model->getAttributeLabel('city'),]) ?>
-
-                    <?php
-                    $state_names = ArrayHelper::map(common\models\LutState::find()->orderBy('name')->asArray()->all(), 'id', 'name');
-                    echo $form->field($model, 'lut_state_id')->dropDownList($state_names, ['prompt' => 'State...']);
-                    ?>
+                    <?= $form->field($model, 'sales_id')
+                        ->textInput(['maxlength' => 50, 'placeholder' => 'Your Capital Accounts client number', /*'autocomplete' => 'off'*/]) ?>
 
                     <?= $form->field($model, 'zip')
-                        ->textInput(['maxlength' => 50, 'placeholder' => $model->getAttributeLabel('zip'),]) ?>
-
-                    <?= $form->field($model, 'phone')
-                        ->textInput(['maxlength' => 50, 'placeholder' => $model->getAttributeLabel('phone'),]) ?>
-
-                    <?= $form->field($model, 'website')
-                        ->textInput(['maxlength' => 50, 'placeholder' => $model->getAttributeLabel('website'),]) ?>
-
-                    <?= $form->field($model, 'email_notifications')
-                        ->textInput(['maxlength' => 50, 'placeholder' => $model->getAttributeLabel('email_notifications'),]) ?>
+                        ->textInput(['maxlength' => 50, 'placeholder' => 'Zip Code as it appears on your monthly statement',]) ?>
 
                     <?= $form->field($model, 'username')
                         ->textInput(['maxlength' => 50, 'placeholder' => 'Email (Will be a Login)',]) ?>
@@ -86,20 +52,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'template' => '<div class="row"><div class="col-sm-2">{image}</div><div class="col-sm-10">{input}</div></div>',
                         'captchaAction' => ['/user-management/auth/captcha']
                     ]) ?>
-
-                    <?php
-                    $model->type = 1;
-                    $model->balance = 0;
-                    $model->created_at = date('Y-m-d H:i:s');
-                    $model->updated_at = date('Y-m-d H:i:s');
-
-                    echo $form->field($model, 'type')->textInput()->hiddenInput();
-                    echo $form->field($model, 'balance')->textInput()->hiddenInput();
-                    echo $form->field($model, 'created_at')->textInput()->hiddenInput();
-                    echo $form->field($model, 'updated_at')->textInput()->hiddenInput();
-
-
-                    ?>
 
                     <?= Html::submitButton('<span class="glyphicon glyphicon-ok"></span> ' .
                         UserManagementModule::t('front', 'Register'),
