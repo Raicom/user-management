@@ -48,7 +48,7 @@ class ChangeOwnPasswordForm extends Model
 	{
 		return [
 			'current_password' => UserManagementModule::t('back', 'Current password'),
-			'password'         => UserManagementModule::t('front', 'Password'),
+			'password'         => UserManagementModule::t('front', 'New Password'),
 			'repeat_password'  => UserManagementModule::t('front', 'Repeat password'),
 		];
 	}
