@@ -55,7 +55,7 @@ class AuthController extends BaseController
 
 		if ( $model->load(Yii::$app->request->post()) AND $model->login() )
 		{
-			return $this->goBack();
+			return $this->goHome();
 		}
 
 		return $this->renderIsAjax('login', compact('model'));
