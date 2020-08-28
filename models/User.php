@@ -228,6 +228,14 @@ class User extends UserIdentity
     /**
      * @inheritdoc
      */
+    public function getSalesId()
+    {
+        return $this->sales_id;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public static function tableName()
     {
         return Yii::$app->getModule('user-management')->user_table;
