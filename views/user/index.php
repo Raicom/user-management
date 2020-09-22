@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-index">
 
     <div class="panel panel-default">
-        <div class="panel-body">
+        <div class="panel-body" style="overflow: auto">
 
             <div class="row">
                 <div class="col-sm-6">
@@ -50,6 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= GridView::widget([
                 'id'=>'user-grid',
                 'dataProvider' => $dataProvider,
+                'options' => ['style' => 'width:100%'],
                 'pager'=>[
                     'options'=>['class'=>'pagination pagination-sm'],
                     'hideOnSinglePage'=>true,
